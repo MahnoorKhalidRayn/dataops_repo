@@ -1,0 +1,129 @@
+version: 2
+
+models:
+  - name: hub_suppliers
+    description: "Represents supplier entities, managing core supplier information and serving as a master source for supplier data."
+    columns:
+      - name: HUB_SUPPLIER_KEY
+        description: "A unique identifier for each supplier in the hub. This is the primary key of the table and ensures uniqueness for each supplier record."
+        tests:
+          - unique
+          - not_null
+      - name: SUPPLIER_BUSINESS_KEY
+        description: "A business-specific unique identifier for the supplier. This key is used to link supplier records across different systems."
+        tests:
+          - unique
+          - not_null
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the record was loaded into the table. Used for tracking data load timing."
+        tests:
+          - not_null
+      - name: RECORD_SOURCE
+        description: "Indicates the source system or process from which the record originated. Used for data lineage and auditing purposes."
+        tests:
+          - not_null
+  - name: hub_stock_locations
+    description: "Represents stock location entities, managing core information about storage locations and serving as a master source for stock location data."
+    columns:
+      - name: HUB_LOCATION_KEY
+        description: "A unique identifier for the stock location in the hub. This is likely the primary key for the table and is used to establish relationships with other tables."
+        tests:
+          - unique
+          - not_null
+      - name: LOCATION_BUSINESS_KEY
+        description: "The business key representing the stock location. This is a natural key used to uniquely identify the location in the source system."
+        tests:
+          - unique
+          - not_null
+      - name: LOAD_DATE
+        description: "The date and time when the record was loaded into the table. This is used for tracking the data's load history."
+        tests:
+          - not_null
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the record originated. This is used for data lineage and traceability."
+        tests:
+          - not_null
+  - name: hub_accounts
+    description: "Represents account entities, managing core account information and serving as a master source for account data."
+    columns:
+      - name: HUB_ACCOUNT_KEY
+        description: "A unique surrogate key for each account record in the hub. This column is the primary key of the table and ensures uniqueness for each account."
+        tests:
+          - unique
+          - not_null
+      - name: ACCOUNT_BUSINESS_KEY
+        description: "The business key for the account, typically sourced from the operational system. This key is unique for each account and is used to identify the same account across different systems."
+        tests:
+          - unique
+          - not_null
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the record was loaded into the hub. This column is used for auditing and tracking data lineage."
+        tests:
+          - not_null
+      - name: RECORD_SOURCE
+        description: "The source system from which the account data was extracted. This column is used for data lineage and traceability."
+        tests:
+          - not_null
+  - name: hub_users
+    description: "Represents user entities, managing core user information and serving as a master source for user data."
+    columns:
+      - name: HUB_USER_KEY
+        description: "A unique, system-generated hash key that serves as the primary key for the table. It uniquely identifies each user record."
+        tests:
+          - unique
+          - not_null
+      - name: USER_BUSINESS_KEY
+        description: "A unique business identifier for the user, typically sourced from the operational system. This column is also unique for each user."
+        tests:
+          - unique
+          - not_null
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the record was loaded into the table. Used for auditing and tracking data changes."
+        tests:
+          - not_null
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the user record originated. This helps in tracking the provenance of the data."
+        tests:
+          - not_null
+  - name: hub_employees
+    description: "Represents employee entities, managing core employee information and serving as a master source for employee data."
+    columns:
+      - name: HUB_EMPLOYEE_KEY
+        description: "A unique surrogate key for each employee record in the hub. This column is the primary key of the table and is used to uniquely identify employees in the data vault."
+        tests:
+          - unique
+          - not_null
+      - name: EMPLOYEE_BUSINESS_KEY
+        description: "The business key for employees, typically representing a unique identifier from the source system (e.g., employee ID). This column is used to link employee records across systems."
+        tests:
+          - unique
+          - not_null
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the record was loaded into the data warehouse. This column is used for tracking the data load process and supports time-series analysis."
+        tests:
+          - not_null
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the employee record originated. This column is used for data lineage and traceability."
+        tests:
+          - not_null
+  - name: hub_products
+    description: "Represents product entities, managing core product information and serving as a master source for product data."
+    columns:
+      - name: HUB_PRODUCT_KEY
+        description: "A hash-based surrogate key that uniquely identifies each product record in the hub. It is used as the primary key for this table and for linking to other tables in the data vault model."
+        tests:
+          - unique
+          - not_null
+      - name: PRODUCT_BUSINESS_KEY
+        description: "The natural business key for the product, which uniquely identifies the product in the source system. This column is unique and can be used to trace back to the source system."
+        tests:
+          - unique
+          - not_null
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the product record was loaded into the hub. This column is used for auditing and tracking data lineage."
+        tests:
+          - not_null
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the product record originated. This column helps in identifying the origin of the data."
+        tests:
+          - not_null
