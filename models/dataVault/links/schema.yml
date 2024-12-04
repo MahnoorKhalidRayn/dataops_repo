@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: link_contacts
+    description: "Link table connecting contacts, accounts, and users."
+    columns:
+      - name: LINK_CONTACTS_KEY
+        description: "Primary key for the link_contacts table."
+        tests:
+          - unique
+          - not_null
+      - name: HUB_CONTACT_KEY
+        description: "Foreign key to hub_contacts."
+        tests:
+          - not_null
+      - name: HUB_ACCOUNT_KEY
+        description: "Foreign key to hub_accounts."
+        tests:
+          - not_null
+      - name: HUB_USER_KEY
+        description: "Foreign key to hub_users."
+        tests:
+          - not_null
+      - name: LOAD_DATE
+        description: "Load date timestamp."
+        tests:
+          - not_null
+      - name: RECORD_SOURCE
+        description: "Source of the record."
+        tests:
+          - not_null
+  - name: link_inventory
+    description: "Link table connecting inventory items, products, and locations."
+    columns:
+      - name: LINK_INVENTORY_KEY
+        description: "Primary key for the link_inventory table."
+        tests:
+          - unique
+          - not_null
+      - name: HUB_INVENTORY_KEY
+        description: "Foreign key to hub_inventory."
+        tests:
+          - not_null
+      - name: HUB_PRODUCT_KEY
+        description: "Foreign key to hub_products."
+        tests:
+          - not_null
+      - name: HUB_LOCATION_KEY
+        description: "Foreign key to hub_stock_locations."
+        tests:
+          - not_null
+      - name: LOAD_DATE
+        description: "Load date timestamp."
+        tests:
+          - not_null
+      - name: RECORD_SOURCE
+        description: "Source of the record."
+        tests:
+          - not_null
