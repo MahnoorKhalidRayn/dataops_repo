@@ -1,0 +1,209 @@
+version: 2
+
+models:
+  - name: sat_stock_locations
+    description: "Contains descriptive and transactional attributes related to stock locations, supporting reference data and analytical processing."
+    columns:
+      - name: HUB_LOCATION_KEY
+        description: "A foreign key linking to the hub table that uniquely identifies a stock location. It serves as the primary key for this table."
+        tests:
+          - not_null
+          - unique
+      - name: HASH_DIFF
+        description: "A hash value used to detect changes in the satellite table's data. It ensures data integrity and supports change tracking."
+        tests:
+          - not_null
+      - name: LOCATIONNAME
+        description: "The name of the stock location. This provides a human-readable identifier for the location."
+      - name: LOCATIONTYPE
+        description: "The type of the stock location, such as warehouse, store, or distribution center. This categorizes the location for business purposes."
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the record was loaded into the table. Used for tracking the history of changes."
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the record originated. This helps in identifying the provenance of the data."
+
+  - name: sat_accounts
+    description: "Contains descriptive and transactional attributes related to accounts, supporting reference data and analytical processing."
+    columns:
+      - name: HUB_ACCOUNT_KEY
+        description: "A unique identifier linking this satellite table to the corresponding hub table. It serves as the primary key for this table."
+        tests:
+          - not_null
+          - unique
+      - name: HASH_DIFF
+        description: "A hash value representing the unique combination of all descriptive attributes in the row. Used for detecting changes in the data."
+        tests:
+          - not_null
+      - name: ACCOUNTNAME
+        description: "The name of the account, which can represent an individual or a corporate entity."
+      - name: ACCOUNTTYPE
+        description: "The type of account, indicating whether it is an 'Individual' or 'Corporate' account."
+      - name: INDUSTRY
+        description: "The industry associated with the account. In this dataset, all accounts belong to the 'Telecommunications' industry."
+      - name: ANNUALREVENUE
+        description: "The annual revenue of the account."
+      - name: PHONE
+        description: "The phone number associated with the account, which may include extensions or special characters."
+      - name: WEBSITE
+        description: "The website URL of the account, if available."
+      - name: BILLINGADDRESS
+        description: "The billing address of the account, including street, city, state, and postal code."
+      - name: SHIPPINGADDRESS
+        description: "The shipping address of the account, including street, city, state, and postal code."
+      - name: OWNERID
+        description: "The unique identifier of the owner or representative responsible for the account."
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the data was loaded into the table. Used for tracking data lineage."
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the data was extracted. In this case, it is 'ACCOUNTS'."
+
+  - name: sat_inventory
+    description: "Contains descriptive and transactional attributes related to inventory, supporting operational management and analytical processing."
+    columns:
+      - name: HUB_INVENTORY_KEY
+        description: "A unique hash key that serves as the primary key for the table, linking to the corresponding hub table. It uniquely identifies each inventory record."
+        tests:
+          - not_null
+          - unique
+      - name: HASH_DIFF
+        description: "A hash value representing the combination of all descriptive attributes in the record. Used for detecting changes in the data over time."
+        tests:
+          - not_null
+      - name: PRODUCTNAME
+        description: "The name of the product in the inventory, such as 'SIM Card', 'Modem', or 'Set-Top Box'."
+      - name: QUANTITYONHAND
+        description: "The quantity of the product currently available in the inventory."
+      - name: QUANTITYRESERVED
+        description: "The quantity of the product that has been reserved and is not available for immediate use."
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the record was loaded into the table. Used for auditing and tracking data changes."
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the record originated. In this case, it is consistently 'INVENTORY'."
+
+  - name: sat_users
+    description: "Contains descriptive and transactional attributes related to users, supporting reference data and analytical processing."
+    columns:
+      - name: HUB_USER_KEY
+        description: "A unique identifier for each user, derived as a hash key. Serves as the primary key for this table and links to the corresponding hub table."
+        tests:
+          - not_null
+          - unique
+      - name: HASH_DIFF
+        description: "A hash value representing the concatenated data of the record. Used for detecting changes in the user's data."
+        tests:
+          - not_null
+      - name: FIRSTNAME
+        description: "The first name of the user."
+      - name: LASTNAME
+        description: "The last name of the user."
+      - name: EMAIL
+        description: "The email address of the user. This value is unique for each user."
+      - name: ROLE
+        description: "The role assigned to the user, such as Admin, Salesperson, or Manager."
+      - name: PROFILE
+        description: "The profile type of the user, such as Admin or Standard."
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the record was loaded into the table. Used for tracking data lineage."
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the record originated. Used for data lineage purposes."
+
+  - name: sat_employees
+    description: "Contains descriptive and transactional attributes related to employees, supporting reference data and analytical processing."
+    columns:
+      - name: HUB_EMPLOYEE_KEY
+        description: "A unique identifier for each employee, serving as the primary key and linking to the hub table."
+        tests:
+          - not_null
+          - unique
+      - name: HASH_DIFF
+        description: "A hash value representing the unique combination of all descriptive attributes in the row. Ensures row-level uniqueness and is used for change tracking."
+        tests:
+          - not_null
+      - name: FIRSTNAME
+        description: "The first name of the employee."
+      - name: LASTNAME
+        description: "The last name of the employee."
+      - name: DATEOFBIRTH
+        description: "The date of birth of the employee."
+      - name: GENDER
+        description: "The gender of the employee. Possible values include 'Male', 'Female', and 'Non-binary'."
+      - name: HIREDATE
+        description: "The date the employee was hired."
+      - name: JOBID
+        description: "The identifier for the job role assigned to the employee. Links to a job reference table."
+      - name: DEPARTMENTID
+        description: "The identifier for the department the employee belongs to. Links to a department reference table."
+      - name: MANAGERID
+        description: "The identifier for the manager of the employee. May link to another employee record."
+      - name: EMAIL
+        description: "The email address of the employee. Ensures uniqueness for contact purposes."
+      - name: PHONE
+        description: "The phone number of the employee, including extensions if applicable."
+      - name: ADDRESS
+        description: "The residential address of the employee."
+      - name: EMPLOYMENTSTATUS
+        description: "The current employment status of the employee. Possible values include 'Active', 'Inactive', and 'Terminated'."
+      - name: LOAD_DATE
+        description: "The timestamp when the record was loaded into the database. Used for auditing purposes."
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the employee data was obtained."
+
+  - name: sat_contacts
+    description: "Contains descriptive and transactional attributes related to contacts, supporting reference data and analytical processing."
+    columns:
+      - name: HUB_CONTACT_KEY
+        description: "A unique identifier for each contact, serving as the primary key and linking to the corresponding hub table."
+        tests:
+          - not_null
+          - unique
+      - name: HASH_DIFF
+        description: "A hash value used to detect changes in the contact's data. Ensures data versioning and change tracking."
+        tests:
+          - not_null
+      - name: FIRSTNAME
+        description: "The first name of the contact."
+      - name: LASTNAME
+        description: "The last name of the contact."
+      - name: TITLE
+        description: "The title or salutation of the contact, such as 'Prof.' or 'Ms.'."
+      - name: EMAIL
+        description: "The email address of the contact."
+      - name: PHONE
+        description: "The phone number of the contact, including extensions if applicable."
+      - name: MAILINGADDRESS
+        description: "The mailing address of the contact, including street, city, state, and postal code."
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the record was loaded into the table."
+      - name: RECORD_SOURCE
+        description: "The source system or process from which the contact data was obtained."
+
+  - name: sat_products
+    description: "Contains descriptive and transactional attributes related to products, supporting reference data and analytical processing."
+    columns:
+      - name: HUB_PRODUCT_KEY
+        description: "A unique identifier linking this table to the HUB_PRODUCTS table."
+        tests:
+          - not_null
+          - unique
+      - name: HASH_DIFF
+        description: "A hash value representing the unique combination of all descriptive attributes in the row. Ensures row-level uniqueness and is used for change tracking."
+        tests:
+          - not_null
+      - name: PRODUCTNAME
+        description: "The name of the product. This is a descriptive attribute and may not be unique across rows."
+      - name: PRODUCTCODE
+        description: "A unique code assigned to each product. This serves as a business key for identifying products."
+      - name: CATEGORYID
+        description: "An integer representing the category to which the product belongs. This is likely a foreign key referencing a category table."
+      - name: SALEPRICE
+        description: "The sale price of the product."
+      - name: COSTPRICE
+        description: "The cost price of the product."
+      - name: DESCRIPTION
+        description: "A textual description of the product. This provides additional details about the product and is unique for most rows."
+      - name: UOM
+        description: "The unit of measure for the product. In this table, it is consistently set to 'Service'."
+      - name: LOAD_DATE
+        description: "The timestamp indicating when the record was loaded into the table. Used for auditing and tracking data changes."
+      - name: RECORD_SOURCE
+        description: "The source system from which the product data was extracted. In this table, it is consistently set to 'PRODUCTS'."
