@@ -1,27 +1,12 @@
-name: 'telelink_dbt'
-version: '1.0'
-config-version: 2
 
-profile: 'telelink_snowflake'
+        name: 'my_dbt_project'
+        version: '1.0'
+        config-version: 2
 
-source-paths: ['models']
-macro-paths: ['macros']
+        profile: 'your_profile_name'
 
-models:
-  telelink_dbt:
-    staging:
-      +schema: staging
-      +materialized: incremental
-    silver:
-      hubs:
-        +schema: silver
-        +materialized: incremental
-      links:
-        +schema: silver
-        +materialized: incremental
-      satellites:
-        +schema: silver
-        +materialized: incremental
-    sources:
-      +schema: bronze
-      +materialized: view
+        target-path: "target"
+        clean-targets:
+        - "target"
+        - "dbt_modules"
+        
