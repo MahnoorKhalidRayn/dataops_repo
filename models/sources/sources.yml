@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: bronze
+    schema: TELELINK.BRONZE
+    tables:
+      - name: HUB_ACCOUNTS
+      - name: HUB_EMPLOYEES
+      - name: HUB_PRODUCTS
+      - name: HUB_STOCK_LOCATIONS
+      - name: HUB_SUPPLIERS
+      - name: HUB_USERS
+      - name: LINK_CONTACTS
+      - name: LINK_INVENTORY
+      - name: SAT_ACCOUNTS
+      - name: SAT_CONTACTS
+      - name: SAT_EMPLOYEES
+      - name: SAT_INVENTORY
+      - name: SAT_PRODUCTS
+      - name: SAT_STOCK_LOCATIONS
+      - name: SAT_SUPPLIERS
+      - name: SAT_USERS
